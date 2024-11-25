@@ -1,6 +1,20 @@
-library(gridExtra)
-library(ggplot2)
-library(zoo)
+
+rm(list = ls()) # init
+
+if (!require("gridExtra")) {
+  install.packages("gridExtra")
+  stopifnot(require("gridExtra"))
+}
+
+if (!require("ggplot2")) {
+  install.packages("ggplot2")
+  stopifnot(require("ggplot2"))
+}
+
+if (!require("zoo")) {
+  install.packages("zoo")
+  stopifnot(require("zoo"))
+}
 
 # Load csv
 WMT_df <- read.csv("Walmart_AdjPrice.csv")
@@ -23,7 +37,7 @@ WMT_df$BollingerLower <- bollinger_lower
 # Plot 1: Adjusted Close Prices with Bollinger Bands
 price_plot <- ggplot(WMT_df, aes(x = Date)) +
   geom_line(aes(y = AdjClose, color = "Adjusted Close Prices"), 
-            size = 0.7, na.rm = TRUE) +
+            linewidth = 0.7, na.rm = TRUE) +
   geom_ribbon(aes(ymin = BollingerLower, ymax = BollingerUpper, 
                   fill = "Bollinger Bands (Area)"), 
               alpha = 0.4, na.rm = TRUE) +
