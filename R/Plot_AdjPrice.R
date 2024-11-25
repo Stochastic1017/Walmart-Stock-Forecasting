@@ -45,12 +45,6 @@ price_plot <- ggplot(WMT_df, aes(x = Date)) +
     name = "Fill Legend",
     values = c("Bollinger Bands (Area)" = "#e7f0f7")
   ) +
-  labs(
-    title = "Walmart Adjusted Close Prices with Bollinger Bands 
-           (2020-01-01 to 2023-12-06)",
-    x = "Date",
-    y = "Price (in $)"
-  ) +
   theme_light() +
   scale_x_date(date_breaks = "6 months", date_labels = "%Y-%m") +
   theme(

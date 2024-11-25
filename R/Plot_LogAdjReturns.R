@@ -91,19 +91,13 @@ rotated_histogram <- ggplot(WMT_df, aes(x = LogReturns)) +
     axis.title.y = element_blank()
   )
 
-# Combine the plots and add a master title
-master_title <- textGrob("Walmart Adjusted Log Returns Analysis Plot", 
-                         gp = gpar(fontsize = 16, fontface = "bold"))
-
 merged_plot_with_title <- arrangeGrob(
   grobs = list(time_series_plot, rotated_histogram), # Combine the plots
   ncol = 2,
   widths = c(3, 1),
-  top = master_title # Add the master title
 )
 
 # Save the combined plot with title
 ggsave("~/Documents/Walmart_Project/LogAdjReturns.png", 
        plot = merged_plot_with_title, 
        width = 12, height = 6, dpi = 300)
-
