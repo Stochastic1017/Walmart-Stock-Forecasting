@@ -53,8 +53,8 @@ print(t_test_result)
 
 # 2. Test for Skewness = 0
 skewness_value <- skewness(log_returns)
-skewness_test_stat <- skewness_value / sqrt(6 / length(log_returns))  # Test statistic for skewness
-p_value_skew <- 2 * (1 - pnorm(abs(skewness_test_stat)))  # Two-tailed p-value
+skewness_test_stat <- skewness_value/sqrt(6/length(log_returns))
+p_value_skew <- 2 * (1-pnorm(abs(skewness_test_stat)))
 cat("Skewness Test: Test Statistic =", skewness_test_stat, ", p-value =", p_value_skew, "\n")
 
 # 3. Test for Excess Kurtosis = 0
@@ -66,6 +66,35 @@ cat("Kurtosis Test: Test Statistic =", kurtosis_test_stat, ", p-value =", p_valu
 # 4. Combined Normality Test
 shapiro_test_result <- shapiro.test(log_returns)  # Shapiro-Wilk Test
 
-# Print results
-print(shapiro_test_result)
+# Create data frame for test statistics
+stats_table <- data.frame(
+  "Sample_Statistic" = c(
+    sprintf("Mean = %.4f", mean(log_returns)),
+    sprintf("Skewness = %.4f", skewness(log_returns)),
+    sprintf("Kurtosis = %.4f", kurtosis(log_returns) - 3),
+    sprintf("Shapiro-Wilk Test")
+  ),
+  "test statistic" = c(
+    t_test_result$statistic,
+    skewness_test_stat,
+    kurtosis_test_stat,
+    shapiro_test_result$statistic
+  ),
+  "p_value" = c(
+    t_test_result$p.value,
+    p_value_skew,
+    p_value_kurt,
+    shapiro_test_result$p.value
+  )
+)
 
+# Format the table using kable
+kable(stats_table, 
+      format = "latex",
+      col.names = c("Sample Statistic", "t-statistic", "p-value"),
+      digits = 4,
+      align = c('l', 'r', 'r')) %>%
+  kable_styling(full_width = FALSE)
+
+# Print Shapiro-Wilk test result separately
+cat("\nShapiro-Wilk Test p-value:", sprintf("%.4e", shapiro_test_result$p.value))
