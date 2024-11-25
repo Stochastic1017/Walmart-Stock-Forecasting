@@ -1,0 +1,71 @@
+
+rm(list = ls()) # init
+
+# Load necessary libraries
+if (!require("moments")) {
+  install.packages("moments")
+  stopifnot(require("moments"))
+}
+
+if (!require("knitr")) {
+  install.packages("knitr")
+  stopifnot(require("knitr"))
+}
+
+if (!require("kableExtra")) {
+  install.packages("kableExtra")
+  stopifnot(require("kableExtra"))
+}
+
+# Load csv
+WMT_df <- read.csv("Walmart_AdjPrice.csv")
+
+# Convert Date column to Date type
+WMT_df$Date <- as.Date(WMT_df$Date, format = "%Y-%m-%d")
+
+# Compute summary statistics
+statistics_df <- data.frame(
+  Statistic = c("Mean", "Standard Deviation", "Variance", "Median", 
+                "Minimum", "Maximum", "Skewness", "Kurtosis", "Excess Kurtosis"),
+  Value = c(
+    mean(na.omit(WMT_df$LogReturns)),
+    sd(na.omit(WMT_df$LogReturns)),
+    var(na.omit(WMT_df$LogReturns)),
+    median(na.omit(WMT_df$LogReturns)),
+    min(na.omit(WMT_df$LogReturns)),
+    max(na.omit(WMT_df$LogReturns)),
+    moments::skewness(na.omit(WMT_df$LogReturns)),
+    moments::kurtosis(na.omit(WMT_df$LogReturns)),
+    moments::kurtosis(na.omit(WMT_df$LogReturns)) - 3
+  )
+)
+
+# Save the LaTeX table to a file
+latex_table <- kable(statistics_df, format = "latex", booktabs = TRUE, digits = 4,
+                     caption = "Summary Statistics for Walmart Log Returns")
+
+# Assuming WMT_df is your data frame with the LogReturns column
+log_returns <- na.omit(WMT_df$LogReturns)  # Remove NA values
+
+# 1. Test for Mean (μ = 0)
+t_test_result <- t.test(log_returns, mu = 0)
+print(t_test_result)
+
+# 2. Test for Skewness = 0
+skewness_value <- skewness(log_returns)
+skewness_test_stat <- skewness_value / sqrt(6 / length(log_returns))  # Test statistic for skewness
+p_value_skew <- 2 * (1 - pnorm(abs(skewness_test_stat)))  # Two-tailed p-value
+cat("Skewness Test: Test Statistic =", skewness_test_stat, ", p-value =", p_value_skew, "\n")
+
+# 3. Test for Excess Kurtosis = 0
+kurtosis_value <- kurtosis(log_returns) - 3  # Calculate excess kurtosis
+kurtosis_test_stat <- kurtosis_value / sqrt(24 / length(log_returns))  # Test statistic for kurtosis
+p_value_kurt <- 2 * (1 - pnorm(abs(kurtosis_test_stat)))  # Two-tailed p-value
+cat("Kurtosis Test: Test Statistic =", kurtosis_test_stat, ", p-value =", p_value_kurt, "\n")
+
+# 4. Combined Normality Test
+shapiro_test_result <- shapiro.test(log_returns)  # Shapiro-Wilk Test
+
+# Print results
+print(shapiro_test_result)
+
