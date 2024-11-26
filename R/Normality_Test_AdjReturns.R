@@ -1,21 +1,15 @@
 
-rm(list = ls()) # init
+# Clean the environment
+rm(list = ls())
 
-# Load necessary libraries
-if (!require("moments")) {
-  install.packages("moments")
-  stopifnot(require("moments"))
-}
+# Load required libraries
+if (!require("moments")) install.packages("moments", dependencies = TRUE)
+if (!require("knitr")) install.packages("knitr", dependencies = TRUE)
+if (!require("kableExtra")) install.packages("kableExtra", dependencies = TRUE)
 
-if (!require("knitr")) {
-  install.packages("knitr")
-  stopifnot(require("knitr"))
-}
-
-if (!require("kableExtra")) {
-  install.packages("kableExtra")
-  stopifnot(require("kableExtra"))
-}
+library(moments)
+library(knitr)
+library(kableExtra)
 
 # Load csv
 WMT_df <- read.csv("Walmart_AdjPrice.csv")
@@ -66,8 +60,8 @@ cat("Kurtosis Test: Test Statistic =", kurtosis_test_stat, ", p-value =", p_valu
 # 4. Combined Normality Test
 shapiro_test_result <- shapiro.test(log_returns)  # Shapiro-Wilk Test
 
-# Create data frame for test statistics
-stats_table <- data.frame(
+# Create data frame for normality test
+normality_test <- data.frame(
   "Sample_Statistic" = c(
     sprintf("Mean = %.4f", mean(log_returns)),
     sprintf("Skewness = %.4f", skewness(log_returns)),
@@ -89,12 +83,9 @@ stats_table <- data.frame(
 )
 
 # Format the table using kable
-kable(stats_table, 
+kable(normality_test, 
       format = "latex",
       col.names = c("Sample Statistic", "t-statistic", "p-value"),
       digits = 4,
       align = c('l', 'r', 'r')) %>%
   kable_styling(full_width = FALSE)
-
-# Print Shapiro-Wilk test result separately
-cat("\nShapiro-Wilk Test p-value:", sprintf("%.4e", shapiro_test_result$p.value))
