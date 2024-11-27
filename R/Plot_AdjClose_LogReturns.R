@@ -69,10 +69,10 @@ time_series_plot <- ggplot(WMT_df, aes(x = Date)) +
 # Plot 3: Rotated Histogram of Log Returns
 rotated_histogram <- ggplot(WMT_df, aes(x = LogReturns)) +
   geom_rect(aes(xmin = ci_lower, xmax = ci_upper), ymin = 0, ymax = Inf, alpha = 0.3, fill = "#e7f0f7") +
-  geom_histogram(aes(y = after_stat(density)), binwidth = 0.002, color = "#79b9e7", alpha = 0.7, fill = "#79b9e7", na.rm = TRUE) +
+  geom_histogram(aes(y = after_stat(density)), binwidth = 0.0075, color = "white", alpha = 0.7, fill = "#79b9e7", na.rm = TRUE) +
   geom_vline(xintercept = 0.0, color = "#444", linetype = "dashed", linewidth = 0.7) +
-  stat_density(geom = "line", color = "#f47421", linewidth = 1, alpha = 0.8, na.rm = TRUE) +
-  geom_line(data = data.frame(x = normal_x, y = normal_y), aes(x = x, y = y), color = "#ffc120", linewidth = 1) +
+  stat_density(geom = "line", color = "red", linewidth = 1, alpha = 0.8, na.rm = TRUE) +
+  geom_line(data = data.frame(x = normal_x, y = normal_y), aes(x = x, y = y), color = "purple", linewidth = 1) +
   coord_flip() +
   labs(x = "", y = "Density") +
   theme_light() +
@@ -84,9 +84,13 @@ rotated_histogram <- ggplot(WMT_df, aes(x = LogReturns)) +
   )
 
 # Combine bottom row
-bottom_row <- arrangeGrob(grobs = list(time_series_plot, 
-                                       rotated_histogram), 
-                          ncol = 2, widths = c(3, 1))
+bottom_row <- arrangeGrob(grobs = list(time_series_plot, rotated_histogram), ncol = 2, widths = c(3, 1))
+print(bottom_row)
+
+# TableGrob (1 x 2) "arrange": 2 grobs
+# z     cells    name           grob
+# 1 1 (1-1,1-1) arrange gtable[layout]
+# 2 2 (1-1,2-2) arrange gtable[layout]
 
 # Arrange the final layout
 final_layout <- grid.arrange(
@@ -96,3 +100,9 @@ final_layout <- grid.arrange(
   heights = c(1, 1) # Adjust row heights
 )
 
+print(final_layout)
+
+# TableGrob (2 x 1) "arrange": 2 grobs
+# z     cells    name            grob
+# 1 1 (1-1,1-1) arrange  gtable[layout]
+# 2 2 (2-2,1-1) arrange gtable[arrange]
