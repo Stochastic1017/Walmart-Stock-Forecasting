@@ -55,11 +55,16 @@ stationarity_test <- data.frame(
     kpss_log$p.value, kpss_abs$p.value, kpss_squared$p.value
   )
 )
+print(stationarity_test)
 
-# Format the table using kable
-kable(stationarity_test, 
-      format = "latex",
-      col.names = c("Sample Statistic", "t-statistic", "p-value"),
-      digits = 4,
-      align = c('l', 'r', 'r')) %>%
-  kable_styling(full_width = FALSE)
+# Test Test.Statistic      P.Value
+# 1          Box-Ljung Test (Log Returns)   215.37365191 2.168258e-01
+# 2 Box-Ljung Test (Absolute Log Returns)   616.38461461 0.000000e+00
+# 3  Box-Ljung Test (Squared Log Returns)   368.80467547 3.842926e-12
+# 4                ADF Test (Log Returns)   -10.38538774 1.000000e-02
+# 5       ADF Test (Absolute Log Returns)    -7.05432016 1.000000e-02
+# 6        ADF Test (Squared Log Returns)    -7.76192028 1.000000e-02
+# 7               KPSS Test (Log Returns)     0.04139522 1.000000e-01
+# 8      KPSS Test (Absolute Log Returns)     0.84312763 1.000000e-02
+# 9       KPSS Test (Squared Log Returns)     0.52944444 3.503504e-02
+

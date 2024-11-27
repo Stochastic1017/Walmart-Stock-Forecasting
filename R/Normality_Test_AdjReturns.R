@@ -19,8 +19,15 @@ WMT_df$Date <- as.Date(WMT_df$Date, format = "%Y-%m-%d")
 
 # Compute summary statistics
 statistics_df <- data.frame(
-  Statistic = c("Mean", "Standard Deviation", "Variance", "Median", 
-                "Minimum", "Maximum", "Skewness", "Kurtosis", "Excess Kurtosis"),
+  Statistic = c("Mean", 
+                "Standard Deviation", 
+                "Variance", 
+                "Median", 
+                "Minimum", 
+                "Maximum", 
+                "Skewness", 
+                "Kurtosis", 
+                "Excess Kurtosis"),
   Value = c(
     mean(na.omit(WMT_df$LogReturns)),
     sd(na.omit(WMT_df$LogReturns)),
@@ -81,11 +88,24 @@ normality_test <- data.frame(
     shapiro_test_result$p.value
   )
 )
+print(normality_test)
 
-# Format the table using kable
-kable(normality_test, 
-      format = "latex",
-      col.names = c("Sample Statistic", "t-statistic", "p-value"),
-      digits = 4,
-      align = c('l', 'r', 'r')) %>%
-  kable_styling(full_width = FALSE)
+# One Sample t-test
+# 
+# data:  log_returns
+# t = 0.69844, df = 987, p-value = 0.4851
+# alternative hypothesis: true mean is not equal to 0
+# 95 percent confidence interval:
+#   -0.0006023636  0.0012680822
+# sample estimates:
+#   mean of x 
+# 0.0003328593 
+# 
+# Skewness Test: Test Statistic = -5.161373 , p-value = 2.45145e-07 
+# Kurtosis Test: Test Statistic = 89.52865 , p-value = 0 
+# Sample_Statistic test.statistic      p_value
+# 1      Mean = 0.0003      0.6984359 4.850692e-01
+# 2 Skewness = -0.4022     -5.1613731 2.451450e-07
+# 3 Kurtosis = 13.9537     89.5286453 0.000000e+00
+# 4  Shapiro-Wilk Test      0.8490343 1.157196e-29
+
