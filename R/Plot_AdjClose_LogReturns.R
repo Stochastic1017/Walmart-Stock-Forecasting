@@ -84,7 +84,9 @@ rotated_histogram <- ggplot(WMT_df, aes(x = LogReturns)) +
   )
 
 # Combine bottom row
-bottom_row <- arrangeGrob(grobs = list(time_series_plot, rotated_histogram), ncol = 2, widths = c(3, 1))
+bottom_row <- arrangeGrob(grobs = list(time_series_plot, 
+                                       rotated_histogram), 
+                          ncol = 2, widths = c(3, 1))
 
 # Arrange the final layout
 final_layout <- grid.arrange(
@@ -93,9 +95,4 @@ final_layout <- grid.arrange(
   nrow = 2,         # Two rows
   heights = c(1, 1) # Adjust row heights
 )
-
-# Save the final layout as an image (e.g., PNG)
-png("Walmart_Stock_Analysis.png", width = 1000, height = 800, res = 75)
-grid.draw(final_layout) # Render the layout into the image
-dev.off()
 
