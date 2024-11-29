@@ -13,6 +13,8 @@ Let $P_t$ be the price of an asset at time $t$, then the log returns is defined 
 
 $$r_t = \text{log} P_t - \text{log} P_{t-1}$$
 
+<img src="https://github.com/Stochastic1017/Walmart-Stock-Forecasting/blob/main/Images/Walmart_Stock_Analysis.png" width="1200" height="1000">
+
 From Figure 1, there seems to exist some volatility clusters that need to be addressed. Furthermore, the log return distribution seems to be Leptokurtic in nature, illustrating heavy tails and deviations from normality. We now proceed with rigorously testing for normality and stationarity.
 
 ## Fitting ARIMA Model
@@ -72,7 +74,6 @@ The `fGarch` library in R allows us to fit various `GARCH` models and compare pe
 
 **Table 2**: [Summary of fitted ARCH and GARCH model.](https://github.com/Stochastic1017/Walmart-Stock-Forecasting/blob/main/R/Fit_ARCH_GARCH.R)
 
-
 Table 2 summarizes the fitted `GARCH(1,0)` and `GARCH(1,1)` models using a Student-t conditional distribution. Although `GARCH(1,0)` achieves slightly lower AIC (-5.99 vs. -6.03) and BIC (-5.97 vs. -6.00), indicating a marginally better balance between model fit and complexity, we find that `GARCH(1,1)` achieves a higher log-likelihood (2929.534 vs. 2908.097) and captures long-term volatility persistence through the additional $\beta_1$ parameter, which is crucial for financial time series exhibiting volatility clustering. Therefore, we prefer `GARCH(1,1)` over `GARCH(1,0)`.
 
 In mathematical terms, we can write the `GARCH(1,1)` model as:
@@ -104,9 +105,15 @@ There is a substantial increase in log-likelihood compared to individual `GARCH(
 
 ## Residual Diagnostics
 
+<img src="https://github.com/Stochastic1017/Walmart-Stock-Forecasting/blob/main/Images/Residual_Diagnostics.png" width="1000" height="800">
+
+<img src="https://github.com/Stochastic1017/Walmart-Stock-Forecasting/blob/main/Images/ACF_plots.png" width="1000" height="800">
+
 Figure 2 show that the fitted ensemble model is satisfactory. The residuals over time are random around zero, the histogram aligns with a normal distribution, the Q-Q plot shows minimal deviation from normality, and the ACF plots confirm no significant autocorrelation in residuals, squared residuals, or absolute residuals, indicating no remaining structure or volatility clustering.
 
 ## 10-Day Forecast
+
+<img src="https://github.com/Stochastic1017/Walmart-Stock-Forecasting/blob/main/Images/Forecast.png" width="1000" height="800">
 
 Figure 3 allows us to compare our 10-day forecast with the true log returns and adjusted closing price. It is crucial to note that the model only fits data from *2020-01-01* to *2023-12-05*. The actual log returns from *2023-12-06* to *2023-12-15* is used to compare model performance on unseen data.
 
