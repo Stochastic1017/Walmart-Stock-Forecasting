@@ -117,6 +117,7 @@ Figure 2 show that the fitted ensemble model is satisfactory. The residuals over
 
 Figure 3 allows us to compare our 10-day forecast with the true log returns and adjusted closing price. It is crucial to note that the model only fits data from *2020-01-01* to *2023-12-05*. The actual log returns from *2023-12-06* to *2023-12-15* is used to compare model performance on unseen data.
 
-The forecasted log returns align well with the actual values, with all observations falling within the 95\% confidence interval. This indicates that the `ARIMA(0,0,1) + GARCH(1,1)` model effectively captures the short-term dynamics of the stock. However, the increasing width of the confidence interval for closing prices reflects the compounding effect of forecast uncertainty over time, a common challenge in financial modeling. 
+The forecasted log returns align well with the actual values, with all observations falling within the 95\% confidence interval. This indicates that the `ARIMA(0,0,1) + GARCH(1,1)` model effectively captures the short-term dynamics of the stock. However, the increasing width of the confidence interval for closing prices reflects the compounding effect of forecast uncertainty over time. The RMSE for the 10-day forecast, actual log returns, and adjusted prices were 0.0103 and 1.1693, respectively.
+
 
 Given the residual diagnostics affirmation that the `ARIMA(0,0,1) + GARCH(1,1)` model effectively captures the underlying structure of Walmart's stock returns, we can conclude that this is a good and effective model for forecasting.
