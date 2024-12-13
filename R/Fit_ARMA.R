@@ -4,8 +4,10 @@ rm(list = ls())
 
 # Load required libraries
 if (!require("tseries")) install.packages("tseries", dependencies = TRUE)
+if (!require("forecast")) install.packages("forecast", dependencies = TRUE)
 
 library(tseries)
+library(forecast)
 
 # Load csv
 WMT_df <- na.omit(read.csv("Walmart_AdjPrice.csv"))
