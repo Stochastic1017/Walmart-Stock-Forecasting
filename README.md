@@ -1,4 +1,4 @@
-# Modeling and Forecasting Walmart Stock Prices: A Comparative Analysis of ARMA and ARCH Approaches
+# Modeling and Forecasting Walmart Stock Prices: A Comparative Analysis of ARMA and GARCH Approaches
 
 ## Introduction
 
