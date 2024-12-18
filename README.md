@@ -13,7 +13,7 @@ Let $P_t$ be the price of an asset at time $t$, then the log returns is defined 
 
 $$r_t = \text{log} P_t - \text{log} P_{t-1}$$
 
-<img src="https://github.com/Stochastic1017/Walmart-Stock-Forecasting/blob/main/Images/Walmart_Stock_Analysis.png" width="1200" height="1000">
+<img src="https://github.com/Stochastic1017/Walmart-Stock-Forecasting/blob/main/Images/Walmart_Stock_Analysis.png" width="1200" height="800">
 
 From Figure 1, there seems to exist some volatility clusters that need to be addressed. Furthermore, the log return distribution seems to be Leptokurtic in nature, illustrating heavy tails and deviations from normality. We now proceed with rigorously testing for normality and stationarity.
 
